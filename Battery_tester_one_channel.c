@@ -1,3 +1,5 @@
+//obs: this code was made in MikroC compiler.
+
 void refreshLCD();
 
 // LCD module connections
@@ -392,18 +394,3 @@ if(!ADGO) {
 }
 
 }
-
- /*notite program:
-   -- ceva strica afisarea pe tot ecranul.
-   -- v1.1 -- implementat : "Pornire timer in functie de valoarea adc [ start daca ADC > 3.50v ]"
-   -- de folosit constate pentru lcd si de limitat spatiile pentru valori
-   -- de rezolvat TIMER1 in loc de delay si ADC in intreruperi
-   -- atentie calibrare secunda ( delay_ms )
-   -- conversia INT -- str sau mai rau Float -- str nu funtioneaza, si afiseaza porcarii pe lcd
-   -- REZOLVAT adc strica afisarea pe ecran
-   -- REZOLVAT -- afisarea capacitatii nu mai functioneaza (IntTOstr(adc, conversie))
-   -- totul merge ok pana cand este nevoie sa se afiseze valoarea adc
-   --------------------------------------------------------------------------------------------------------
-   -- v1.0 -- dupa capacitatea de incarcare, masoara capacitatea totala, cu pasul de 25 mH la 3 fiecare 3 minute
-           -- de implementat afisarea valorii tensiunii pe adc si pornirea ceasului intre tensiunile [3.5, 4.2] volti
- */
