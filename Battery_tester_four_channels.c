@@ -76,7 +76,7 @@ Status slot1,slot2,slot3,slot4;
 
  void eroare(){
 
- //unul dintre comenzile astea face sa nu mai functioneze adc-ul
+ //There is a issue with one of these register, as it interferes with ADC data aquisition
    C2ON_bit =0;
    C1ON_bit =0;
    ADON_bit =1;
