@@ -118,15 +118,15 @@ void initializare(){
    TXCKSEL_bit = 0;
  }
  
- void addToString( int line,int a, int b, char* tmp ) {
-int i=0;
-for (i=a;i<b;i++)
-{
-if( line ==1 )
- lcd_line1[i] = tmp[i];
-else if ( line ==2 )
-  lcd_line2[i] = tmp[i];
-}
+void addToString( int line,int a, int b, char* tmp ) {
+   int i=0;
+   for (i=a;i<b;i++)
+   {
+     if( line ==1 )
+      lcd_line1[i] = tmp[i];
+     else if ( line ==2 )
+       lcd_line2[i] = tmp[i];
+   }
 }
 
 void Int2ChrSec(int sec){
@@ -142,71 +142,67 @@ void Int2ChrSec(int sec){
 void Int2ChrMin(int min){
    char* conversie= "00";
    if (min <=60)   {
-   IntToStrWithZeros(min,conversie);   //MINUTE
-   lcd_line1[11] = conversie[4] ;
-   lcd_line1[12] = conversie[5];    
-   
-   displayChr.minute[0] = conversie[4];
-   displayChr.minute[1] = conversie[5];
-      }
-   else   {
-   
+      IntToStrWithZeros(min,conversie);   //MINUTE
+      lcd_line1[11] = conversie[4] ;
+      lcd_line1[12] = conversie[5];    
+      displayChr.minute[0] = conversie[4];
+      displayChr.minute[1] = conversie[5];
+   }  else   {  
       lcd_line1[11] = '0' ;
-      lcd_line1[12] = '0' ;      }
-   
-      displayChr.minute[0] = '0';
-      displayChr.minute[1] = '0';
+      lcd_line1[12] = '0' ;      
+   }
+
+   displayChr.minute[0] = '0';
+   displayChr.minute[1] = '0';
 
 
 
 }
 void Int2ChrOre(int oret){
-   char* conversie= "00";
-    IntToStrWithZeros(oret,conversie);      //ORE
-    lcd_line1[8]   = conversie[4] ;
-    lcd_line1[9]   = conversie[5];
+  char* conversie= "00";
+  IntToStrWithZeros(oret,conversie);      //ORE
+  lcd_line1[8]   = conversie[4] ;
+  lcd_line1[9]   = conversie[5];
 
-    displayChr.ore[0] = conversie[4];
-    displayChr.ore[1] = conversie[5];
-
-
+  displayChr.ore[0] = conversie[4];
+  displayChr.ore[1] = conversie[5];
 }
 
 double prelucreazaTensiune(){
-      double tensiune_adc;
-      tensiune_adc = 5.12 /1024 *adc*1000; // rezultatul va fi double sau int?
-      return tensiune_adc;
+  double tensiune_adc;
+  tensiune_adc = 5.12 /1024 *adc*1000; // rezultatul va fi double sau int?
+  return tensiune_adc;
 }
 
 void afiseazaTensiune(){
-      char* conversie= "0000";
-      double tensiune_adc;
-      int conv_int=0;
-      tensiune_adc = 5.12 /1024 *adc*1000; // rezultatul va fi double sau int?
-      conv_int =(int)tensiune_adc;
-      IntToStrWithZeros(conv_int, conversie);
-      
-        lcd_line1[2]   = conversie[2];
-        lcd_line1[3]   = conversie[3];
-        lcd_line1[4]   = conversie[4];
-        lcd_line1[5]   = conversie[5];
-        
-        displayChr.tensiune[0] = conversie[2];
-        displayChr.tensiune[1] = conversie[3];
-        displayChr.tensiune[2] = conversie[4];
-        displayChr.tensiune[3] = conversie[5];
+  char* conversie= "0000";
+  double tensiune_adc;
+  int conv_int=0;
+  tensiune_adc = 5.12 /1024 *adc*1000; // rezultatul va fi double sau int?
+  conv_int =(int)tensiune_adc;
+  IntToStrWithZeros(conv_int, conversie);
+
+  lcd_line1[2]   = conversie[2];
+  lcd_line1[3]   = conversie[3];
+  lcd_line1[4]   = conversie[4];
+  lcd_line1[5]   = conversie[5];
+
+  displayChr.tensiune[0] = conversie[2];
+  displayChr.tensiune[1] = conversie[3];
+  displayChr.tensiune[2] = conversie[4];
+  displayChr.tensiune[3] = conversie[5];
       
 }
- void setTimerON_OFF(){
+
+void setTimerON_OFF(){
    if(adc>200)  {
            TMR1ON_bit=1;
            timer_on=1;
-}
-   else {
+   } else {
            TMR1ON_bit=0;
            timer_on=0;
            RA1_bit=0;
- }
+   }
 }
 
 void afiseazaStare(){
@@ -319,38 +315,37 @@ Lcd_Out(2,1,lcd_line2);
 
 //MAIN
 void main(){
-   int adc =0;
+  int adc =0;
 
-   initializare();
+  initializare();
 
-   ADC_Init();
-   RA2_bit =0;
-   Lcd_Init();
-   Lcd_Cmd(_LCD_CURSOR_OFF);
+  ADC_Init();
+  RA2_bit =0;
+  Lcd_Init();
+  Lcd_Cmd(_LCD_CURSOR_OFF);
 
-   TMR1H=0xF6;
-   TMR1L=0xC3;
-   RA1_bit=1;
-   TMR1ON_bit =1;
+  TMR1H=0xF6;
+  TMR1L=0xC3;
+  RA1_bit=1;
+  TMR1ON_bit =1;
 
-   UART_Init(19200);
-  
-   debugMode(0);
-   while (1){
-   
-    adc= adc_read(2);
-   //REFRESH LCD
+  UART_Init(19200);
 
-   if(adc>200)  {
-           TMR1ON_bit=1;
-           timer_on=1;
-}
-   else {
-           TMR1ON_bit=0;
-           timer_on=0;
- }
+  debugMode(0);
+  while (1){
+
+   adc= adc_read(2);
+  //REFRESH LCD
+
+  if(adc>200)  {
+     TMR1ON_bit=1;
+     timer_on=1;
+  } else {
+     TMR1ON_bit=0;
+     timer_on=0;
+  }
  
- refreshAll1Sec(toggleRefresh);
+   refreshAll1Sec(toggleRefresh);
    refreshLcd();
    displayChr.secunde[1] ='4';
    displayChr.secunde[0]='5';
@@ -364,33 +359,27 @@ void main(){
 }}
 
 interrupt(){
-  if (TMR1IF_bit)
-     {
+  if (TMR1IF_bit) {
      if (counter > 61) {
-
-                if(adc >= tensiune_min)
-                  secunde++;
-                refresh_en=1;
-                counter=0;
-                TMR1H=0xF6;
-                TMR1L=0xC3;
-                RA1_bit = ~RA1_bit;
-                toggleRefresh=1;
-                TMR1IF_bit =0; }
-    else 
-    {
-    counter++;
-    TMR1IF_bit =0;
+        if(adc >= tensiune_min)
+           secunde++;
+           refresh_en=1;
+           counter=0;
+           TMR1H=0xF6;
+           TMR1L=0xC3;
+           RA1_bit = ~RA1_bit;
+           toggleRefresh=1;
+           TMR1IF_bit =0; 
+     } else {
+        counter++;
+        TMR1IF_bit =0;
+     }
+ } else if (ADIF_bit)  {
+   if(!ADGO) {
+       adc = ADRESH+ADRESL;
+       ADGO_bit=1;
     }
-
-   }
-else if (ADIF_bit)
-{
-if(!ADGO) {
-          adc = ADRESH+ADRESL;
-          ADGO_bit=1;
-          }
-          ADIF_bit =0;
-}
+   ADIF_bit =0;
+  }
 
 }
